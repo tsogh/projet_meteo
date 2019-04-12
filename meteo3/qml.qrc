@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>soleil.svg</file>
+        <file>flechevertical.svg</file>
+        <file>flecheascendante.svg</file>
+        <file>flechedescendante.svg</file>
+        <file>flechehorizontale.svg</file>
+        <file>bellenuit.svg</file>
+        <file>nuitnuageuse.svg</file>
+        <file>orage.svg</file>
+        <file>pluie.svg</file>
+        <file>risqueaverses.svg</file>
+        <file>soleilnuage.svg</file>
+        <file>soleiltresnuageux.svg</file>
+    </qresource>
+</RCC>
