@@ -1,0 +1,12 @@
+[QMake_Builder]
+Build_Folder=/home/tsogh/projects/tfg/build
+Build_Type=0
+Extra_Arguments=
+Install_Prefix=
+QMake_Binary=/usr/bin/qmake
+
+[QMake_Builder][/home/tsogh/projects/tfg/build]
+Build_Type=0
+Extra_Arguments=
+Install_Prefix=
+QMake_Binary=/usr/bin/qmake
