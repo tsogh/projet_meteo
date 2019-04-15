@@ -197,7 +197,7 @@ Window
     }
 	Timer {
 		id: globalTimer
-		interval: 7000
+		interval: 1000
 		repeat: true
 		running: true
 		triggeredOnStart: true

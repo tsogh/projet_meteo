@@ -17,6 +17,7 @@ private:
     qreal m_press=1001;
     QString m_des;
     QString m_img;
+    QString m_trend;
     struct bme280_dev m_dev;
 signals:
     void tempChanged();

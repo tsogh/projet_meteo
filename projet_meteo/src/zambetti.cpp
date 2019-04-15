@@ -4,6 +4,7 @@
 #include <string>
 #include <math.h>
 #include "zambetti.h"
+#include <utility>
 using namespace std;
 string get_trend_text(float trend) {
   string trend_str = "Steady"; // Default weather state
@@ -18,9 +19,10 @@ string get_trend_text(float trend) {
 }
 
 
-string lettre_zambetti(char code){
+string lettre_zambetti(string  code){
   string  des ="";
-  switch (code) {
+ const  char * tmp=code.c_str();
+  switch (tmp[0]) {
   case 'A': des = "Settled Fine Weather"; break;
   case 'B': des = "Fine Weather"; break;
   case 'C': des = "Becoming Fine"; break;
@@ -51,13 +53,15 @@ string lettre_zambetti(char code){
   }
   return des;
 }
-string calc_zambretti(float zpressure, string ztrend) {
+pair<string,string> calc_zambretti(float zpressure, string ztrend) {
   int zmonth =8;
+  pair<string,string> rslt;
   string wx_text,wx_image;
   // FALLING
   if (ztrend == "Falling" || ztrend == "Falling slow" || ztrend == "Falling fast") {
     double zambretti = 0.0009746*zpressure*zpressure - 2.1068*zpressure+1138.7019; //y = 0.0009746x^2-2.1068x+1138.7019
-    // A Winter falling generally results in a Z value higher by 1 unit.
+    printf("zambetti %f \n",zambretti);    
+// A Winter falling generally results in a Z value higher by 1 unit.
     if (zmonth < 4 || zmonth > 9) zambretti = zambretti + 1; // + makes the forecast worst, - better!
     switch (int(round(zambretti))) {
       case 1:  wx_text = 'A'; wx_image = "sunny"; break;       //Settled Fine
@@ -112,5 +116,7 @@ string calc_zambretti(float zpressure, string ztrend) {
     }
   }
 cout << wx_text <<" "<< wx_image<< " " <<ztrend<<endl;
-return wx_image;
+rslt.first=wx_text;
+rslt.second=wx_image;
+return rslt;
 }
