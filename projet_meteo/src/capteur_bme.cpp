@@ -116,6 +116,7 @@ struct bme280_data stream_sensor_data_normal_mode(struct bme280_dev *dev)
     //calc_zambretti(tmp, get_trend_text(trend));
     //print_sensor_data(&comp_data);
 //	}
+printf("ok %d\n",rslt);
 
     return comp_data;
 }

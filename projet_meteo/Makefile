@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = tfg21.0.0
-DISTDIR = /home/pi/Bureau/tfg2/.tmp/tfg21.0.0
+DISTDIR = /home/pi/Desktop/projet_meteo/.tmp/tfg21.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) -lQt5Quick -lQt5Gui -lQt5Qml -lQt5Network -lQt5Core -lGLESv2 -lpthread 
@@ -329,9 +329,11 @@ compiler_moc_header_make_all: moc_Objets.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_Objets.cpp
 moc_Objets.cpp: src/zambetti.h \
+		src/bme280.h \
+		src/bme280_defs.h \
 		src/Objets.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
-	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Bureau/tfg2 -I/home/pi/Bureau/tfg2 -I/usr/include/c++/6/bits -I/usr/include/c++/6 -I/usr/include -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtQuick -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtQml -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include src/Objets.h -o moc_Objets.cpp
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Desktop/projet_meteo -I/home/pi/Desktop/projet_meteo -I/usr/include/c++/6/bits -I/usr/include/c++/6 -I/usr/include -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtQuick -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtQml -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include src/Objets.h -o moc_Objets.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -359,7 +361,9 @@ capteur_bme.o: src/capteur_bme.cpp src/capteur_bme.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o capteur_bme.o src/capteur_bme.cpp
 
 main.o: src/main.cpp src/Objets.h \
-		src/zambetti.h
+		src/zambetti.h \
+		src/bme280.h \
+		src/bme280_defs.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
 
 Objets.o: src/Objets.cpp src/Objets.h \

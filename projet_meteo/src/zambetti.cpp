@@ -10,13 +10,9 @@
 using namespace std;
 string get_trend_text(float trend) {
   string trend_str = "Steady"; // Default weather state
-  //if      (trend > 3.5)                    {trend_str = "Rising";  }//fast
-  //else if (trend > 1.5   && trend <= 3.5)  {trend_str = "Rising";       }
   if (trend > 0.25  )  {trend_str = "Rising";  }//slow
   else if (trend > -0.25 && trend < 0.25)  {trend_str = "Steady";       }
   else if ( trend < -0.25) {trend_str = "Falling"; }//slow
-  //else if (trend >= -3.5 && trend < -1.5)  {trend_str = "Falling";      }
-  //else if (trend <= -3.5)                  {trend_str = "Falling"; }//fast
   return trend_str;
 }
 
