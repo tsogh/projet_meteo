@@ -24,7 +24,7 @@ Window
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.top: parent.top
-            anchors.topMargin: 8
+            //anchors.topMargin: 8
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: rec.height/20
             color:"black"
@@ -182,18 +182,19 @@ Window
     }
 
 	function update() {
-	var t = "<b>Température</b><br>%1°"
+	var t = "<b>Température</b><br>%1°C"
         var p = "<b>Pression</b><br>%1hPa"
         var h = "<b>Humidité</b><br>%1%"
         var d = "<b>%1</b>"
+        var f= "%1.svg"
 	var img="%1.svg"
         capt.refresh()
-        msg_tmp.text = t.arg(capt.temp)
+        msg_tmp.text = t.arg(capt.temp.toFixed(2))
         msg_humi.text = h.arg(capt.humi)
-        msg_press.text = p.arg(capt.press)
+        msg_press.text = p.arg(capt.press.toFixed(2))
 	image1.source=img.arg(capt.img)
         des.text=d.arg(capt.des)
-
+        image2.source=f.arg(capt.fleche)
     }
 	Timer {
 		id: globalTimer

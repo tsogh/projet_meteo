@@ -5,8 +5,8 @@
 #include <string>
 #include <math.h>
 #include <utility>
-
+#include <tuple>
 using namespace std;
 string get_trend_text(float trend);
 string lettre_zambetti(string code);
-pair<string,string> calc_zambretti(float zpressure, string ztrend);
+tuple <string,string,string> calc_zambretti(float zpressure, float ztrend);

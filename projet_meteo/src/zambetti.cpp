@@ -5,21 +5,23 @@
 #include <math.h>
 #include "zambetti.h"
 #include <utility>
+#include <iostream>
+#include <tuple>
 using namespace std;
 string get_trend_text(float trend) {
   string trend_str = "Steady"; // Default weather state
-  if      (trend > 3.5)                    {trend_str = "Rising fast";  }
-  else if (trend > 1.5   && trend <= 3.5)  {trend_str = "Rising";       }
-  else if (trend > 0.25  && trend <= 1.5)  {trend_str = "Rising slow";  }
+  //if      (trend > 3.5)                    {trend_str = "Rising";  }//fast
+  //else if (trend > 1.5   && trend <= 3.5)  {trend_str = "Rising";       }
+  if (trend > 0.25  )  {trend_str = "Rising";  }//slow
   else if (trend > -0.25 && trend < 0.25)  {trend_str = "Steady";       }
-  else if (trend >= -1.5 && trend < -0.25) {trend_str = "Falling slow"; }
-  else if (trend >= -3.5 && trend < -1.5)  {trend_str = "Falling";      }
-  else if (trend <= -3.5)                  {trend_str = "Falling fast"; }
+  else if ( trend < -0.25) {trend_str = "Falling"; }//slow
+  //else if (trend >= -3.5 && trend < -1.5)  {trend_str = "Falling";      }
+  //else if (trend <= -3.5)                  {trend_str = "Falling"; }//fast
   return trend_str;
 }
 
 
-string lettre_zambetti(string  code){
+string lettre_zambetti(string code){
   string  des ="";
  const  char * tmp=code.c_str();
   switch (tmp[0]) {
@@ -53,12 +55,19 @@ string lettre_zambetti(string  code){
   }
   return des;
 }
-pair<string,string> calc_zambretti(float zpressure, string ztrend) {
-  int zmonth =8;
-  pair<string,string> rslt;
-  string wx_text,wx_image;
+tuple <string,string,string> calc_zambretti(float zpressure, float trend) {
+  string ztrend=get_trend_text(trend);
+  time_t now =time(0);
+  tm *ltm=localtime(&now);
+  int zmonth ;
+  zmonth=ltm->tm_mon;
+  cout << zmonth;
+  //pair<string,string> rslt;
+  tuple <string,string,string> rslt;
+  string wx_image;
+  string wx_text;
   // FALLING
-  if (ztrend == "Falling" || ztrend == "Falling slow" || ztrend == "Falling fast") {
+  if (ztrend == "Falling" ) {
     double zambretti = 0.0009746*zpressure*zpressure - 2.1068*zpressure+1138.7019; //y = 0.0009746x^2-2.1068x+1138.7019
     printf("zambetti %f \n",zambretti);    
 // A Winter falling generally results in a Z value higher by 1 unit.
@@ -94,7 +103,7 @@ pair<string,string> calc_zambretti(float zpressure, string ztrend) {
     }
   }
   // RISING
-  if (ztrend == "Rising" || ztrend == "Rising slow" || ztrend == "Rising fast") {
+  if (ztrend == "Rising" ) {
     float zambretti = 142.57-0.1376*zpressure; //y = 142.57-0.1376x
     //A Summer rising, improves the prospects by 1 unit over a Winter rising
     if (zmonth < 4 || zmonth > 9) zambretti = zambretti + 1; // Increasing values makes the forecast worst!
@@ -116,7 +125,10 @@ pair<string,string> calc_zambretti(float zpressure, string ztrend) {
     }
   }
 cout << wx_text <<" "<< wx_image<< " " <<ztrend<<endl;
-rslt.first=wx_text;
-rslt.second=wx_image;
+get<0>(rslt)=lettre_zambetti(wx_text);
+get<1>(rslt)=wx_image;
+get<2>(rslt)=ztrend;
+//rslt.first=lettre_zambetti(wx_text);
+//rslt.second=wx_image;
 return rslt;
 }
