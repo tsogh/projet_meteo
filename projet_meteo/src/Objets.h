@@ -37,7 +37,10 @@ signals:
 public slots:
 	void refresh();
 public:
-	  void histo_press();
+    qreal calcul_tendance();
+    void recup_val();
+    void calcul_zam();
+    void histo_press();
     Objets();
     qreal temp() const;
     qreal humi() const;
