@@ -3,6 +3,7 @@
 #include <QString>
 #include "zambetti.h"
 #include "bme280.h"
+#include "vector"
 class Objets : public QObject
 {
 	Q_OBJECT
@@ -22,6 +23,10 @@ private:
     QString m_trend;
     struct bme280_dev m_dev;
     QString m_fleche;
+		std::vector<qreal> his_h;
+		std::vector<qreal> his_m;
+		std::vector<qreal> his_s;
+
 signals:
     void tempChanged();
     void humiChanged();
@@ -32,6 +37,7 @@ signals:
 public slots:
 	void refresh();
 public:
+	  void histo_press();
     Objets();
     qreal temp() const;
     qreal humi() const;
@@ -39,5 +45,5 @@ public:
     QString des() const;
     QString img() const;
     QString fleche() const;
-   
+
 };

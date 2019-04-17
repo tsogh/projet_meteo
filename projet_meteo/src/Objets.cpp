@@ -7,6 +7,7 @@
 #include <utility>
 #include <string>
 #include <tuple>
+#include <vector>
 using namespace std;
 
 qreal convert_pressAbs(qreal press, qreal altitude,qreal temp){
@@ -29,6 +30,32 @@ void Objets::refresh() {
     m_des=QString::fromStdString(get<0>(rslt));
     m_img=QString::fromStdString(get<1>(rslt));
     m_fleche=QString::fromStdString(get<2>(rslt));
+}
+
+void Objets::histo_press(){
+    his_s.push_back(m_press);
+    if (his_s.size()==60) {
+      qreal moy_s=0;
+      while(!his_s.empty()){
+        moy_s+=his_s.back();
+        his_s.pop_back();
+      }
+      moy_s/=60;
+      his_m.push_back(moy_s);
+      his_s.push_back(m_press);
+    }
+    if (his_m.size()==60) {
+      qreal moy_m=0;
+      while(!his_m.empty()){
+        moy_m+=his_m.back();
+        his_m.pop_back();
+      }
+      moy_m/=60;
+      his_h.push_back(moy_m);
+    }
+    if (his_h.size()==24) {
+      his_h.erase(his_h.begin());
+    }
 }
 Objets::Objets() {
     m_dev= init_capteur();
