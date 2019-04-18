@@ -53,7 +53,7 @@ int8_t user_i2c_read(uint8_t id, uint8_t reg_addr, uint8_t *data, uint16_t len)
   return 0;
 }
 
-int8_t user_i2c_write(uint8_t id, uint8_t reg_addr, uint8_t *data, uint16_t len)//typecast
+int8_t user_i2c_write(uint8_t id, uint8_t reg_addr, uint8_t *data, uint16_t len)
 {
   int8_t *buf;
   buf = (int8_t*)malloc(len +1);
@@ -66,59 +66,13 @@ int8_t user_i2c_write(uint8_t id, uint8_t reg_addr, uint8_t *data, uint16_t len)
 
 
 
-
-void print_sensor_data(struct bme280_data *comp_data)
+struct bme280_data lecture_data_capteur(struct bme280_dev *dev)
 {
-#ifdef BME280_FLOAT_ENABLE
-    printf("temperature:%0.2f*C   pressure:%0.2fhPa   humidity:%0.2f%%\r\n",comp_data->temperature, comp_data->pressure/100, comp_data->humidity);
-#else
-    printf("temperature:%ld*C   pressure:%ldhPa   humidity:%ld%%\r\n",comp_data->temperature, comp_data->pressure/100, comp_data->humidity);
-#endif
-}
-
-
-
-struct bme280_data stream_sensor_data_normal_mode(struct bme280_dev *dev)
-{
-    int8_t rslt;
-    //uint8_t settings_sel;
-    struct bme280_data comp_data;
-
-    /* Recommended mode of operation: Indoor navigation */
-    /*dev->settings.osr_h = BME280_OVERSAMPLING_1X;
-    dev->settings.osr_p = BME280_OVERSAMPLING_16X;
-    dev->settings.osr_t = BME280_OVERSAMPLING_2X;
-    dev->settings.filter = BME280_FILTER_COEFF_16;
-    dev->settings.standby_time = BME280_STANDBY_TIME_62_5_MS;
-
-    settings_sel = BME280_OSR_PRESS_SEL;
-    settings_sel |= BME280_OSR_TEMP_SEL;
-    settings_sel |= BME280_OSR_HUM_SEL;
-    settings_sel |= BME280_STANDBY_SEL;
-    settings_sel |= BME280_FILTER_SEL;
-    rslt = bme280_set_sensor_settings(settings_sel, dev);
-    rslt = bme280_set_sensor_mode(BME280_NORMAL_MODE, dev);*/
-
- /*while (i<10) {
-        dev->delay_ms(70);
-        rslt = bme280_get_sensor_data(BME280_ALL, &comp_data, dev);
-    liste.push_back(comp_data);
-    i++;
-    }
-
-    printf("Temperature           Pressure             Humidity\r\n");*/
-   // while (1) {
+    bme280_data  compt_data;  
     dev->delay_ms(70);
-    rslt = bme280_get_sensor_data(BME280_ALL, &comp_data, dev);
-    //float trend = 1009- 1010;
-    //float trend = liste[liste.size()-4].pressure/100-liste[liste.size()-1].pressure/100;
-    //float tmp= comp_data.pressure/100;            // Trend over the last 3-hours
-    //calc_zambretti(tmp, get_trend_text(trend));
-    //print_sensor_data(&comp_data);
-//	}
-printf("ok %d\n",rslt);
+    bme280_get_sensor_data(BME280_ALL, &compt_data, dev);
+    return compt_data;
 
-    return comp_data;
 }
 
 
@@ -127,7 +81,6 @@ struct bme280_dev init_capteur()
   struct bme280_dev dev;
   int8_t rslt = BME280_OK;
   uint8_t settings_sel;
-  struct bme280_data comp_data;
   if ((fd = open(IIC_Dev, O_RDWR)) < 0) {
     exit(1);
   }

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Objets_t {
-    QByteArrayData data[15];
-    char stringdata0[120];
+    QByteArrayData data[18];
+    char stringdata0[152];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,19 +37,23 @@ QT_MOC_LITERAL(4, 32, 12), // "pressChanged"
 QT_MOC_LITERAL(5, 45, 10), // "desChanged"
 QT_MOC_LITERAL(6, 56, 10), // "imgChanged"
 QT_MOC_LITERAL(7, 67, 13), // "flecheChanged"
-QT_MOC_LITERAL(8, 81, 7), // "refresh"
-QT_MOC_LITERAL(9, 89, 4), // "temp"
-QT_MOC_LITERAL(10, 94, 4), // "humi"
-QT_MOC_LITERAL(11, 99, 5), // "press"
-QT_MOC_LITERAL(12, 105, 3), // "des"
-QT_MOC_LITERAL(13, 109, 3), // "img"
-QT_MOC_LITERAL(14, 113, 6) // "fleche"
+QT_MOC_LITERAL(8, 81, 12), // "colorChanged"
+QT_MOC_LITERAL(9, 94, 7), // "refresh"
+QT_MOC_LITERAL(10, 102, 12), // "refresh_demo"
+QT_MOC_LITERAL(11, 115, 4), // "temp"
+QT_MOC_LITERAL(12, 120, 4), // "humi"
+QT_MOC_LITERAL(13, 125, 5), // "press"
+QT_MOC_LITERAL(14, 131, 3), // "des"
+QT_MOC_LITERAL(15, 135, 3), // "img"
+QT_MOC_LITERAL(16, 139, 6), // "fleche"
+QT_MOC_LITERAL(17, 146, 5) // "color"
 
     },
     "Objets\0tempChanged\0\0humiChanged\0"
     "pressChanged\0desChanged\0imgChanged\0"
-    "flecheChanged\0refresh\0temp\0humi\0press\0"
-    "des\0img\0fleche"
+    "flecheChanged\0colorChanged\0refresh\0"
+    "refresh_demo\0temp\0humi\0press\0des\0img\0"
+    "fleche\0color"
 };
 #undef QT_MOC_LITERAL
 
@@ -59,25 +63,28 @@ static const uint qt_meta_data_Objets[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
-       6,   56, // properties
+       9,   14, // methods
+       7,   68, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       6,       // signalCount
+       7,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x06 /* Public */,
-       3,    0,   50,    2, 0x06 /* Public */,
-       4,    0,   51,    2, 0x06 /* Public */,
-       5,    0,   52,    2, 0x06 /* Public */,
-       6,    0,   53,    2, 0x06 /* Public */,
-       7,    0,   54,    2, 0x06 /* Public */,
+       1,    0,   59,    2, 0x06 /* Public */,
+       3,    0,   60,    2, 0x06 /* Public */,
+       4,    0,   61,    2, 0x06 /* Public */,
+       5,    0,   62,    2, 0x06 /* Public */,
+       6,    0,   63,    2, 0x06 /* Public */,
+       7,    0,   64,    2, 0x06 /* Public */,
+       8,    0,   65,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       8,    0,   55,    2, 0x0a /* Public */,
+       9,    0,   66,    2, 0x0a /* Public */,
+      10,    0,   67,    2, 0x0a /* Public */,
 
  // signals: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -87,14 +94,16 @@ static const uint qt_meta_data_Objets[] = {
 
  // slots: parameters
     QMetaType::Void,
+    QMetaType::Void,
 
  // properties: name, type, flags
-       9, QMetaType::QReal, 0x00495001,
-      10, QMetaType::QReal, 0x00495001,
       11, QMetaType::QReal, 0x00495001,
-      12, QMetaType::QString, 0x00495001,
-      13, QMetaType::QString, 0x00495001,
+      12, QMetaType::QReal, 0x00495001,
+      13, QMetaType::QReal, 0x00495001,
       14, QMetaType::QString, 0x00495001,
+      15, QMetaType::QString, 0x00495001,
+      16, QMetaType::QString, 0x00495001,
+      17, QMetaType::QString, 0x00495001,
 
  // properties: notify_signal_id
        0,
@@ -103,6 +112,7 @@ static const uint qt_meta_data_Objets[] = {
        3,
        4,
        5,
+       6,
 
        0        // eod
 };
@@ -119,7 +129,9 @@ void Objets::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 3: _t->desChanged(); break;
         case 4: _t->imgChanged(); break;
         case 5: _t->flecheChanged(); break;
-        case 6: _t->refresh(); break;
+        case 6: _t->colorChanged(); break;
+        case 7: _t->refresh(); break;
+        case 8: _t->refresh_demo(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -167,6 +179,13 @@ void Objets::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
                 return;
             }
         }
+        {
+            typedef void (Objets::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Objets::colorChanged)) {
+                *result = 6;
+                return;
+            }
+        }
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty) {
@@ -180,6 +199,7 @@ void Objets::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 3: *reinterpret_cast< QString*>(_v) = _t->des(); break;
         case 4: *reinterpret_cast< QString*>(_v) = _t->img(); break;
         case 5: *reinterpret_cast< QString*>(_v) = _t->fleche(); break;
+        case 6: *reinterpret_cast< QString*>(_v) = _t->color(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -214,29 +234,29 @@ int Objets::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 9)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 9;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 6;
+        _id -= 7;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
@@ -276,5 +296,11 @@ void Objets::imgChanged()
 void Objets::flecheChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 5, Q_NULLPTR);
+}
+
+// SIGNAL 6
+void Objets::colorChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 6, Q_NULLPTR);
 }
 QT_END_MOC_NAMESPACE

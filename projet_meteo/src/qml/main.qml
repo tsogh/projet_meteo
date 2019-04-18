@@ -15,7 +15,7 @@
             width: parent.width
             height: parent.height
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "#1e90ff" }
+                GradientStop { id: radian ;position: 0.0; color: "#1e90ff" }
                 GradientStop { position: 1.0; color: "white" }
                 }
                 //color: "#00008b"
@@ -206,14 +206,16 @@
             }
     
         function update() {
-        var t = "<b>Température</b><br>%1°C"
+            var t = "<b>Température</b><br>%1°C"
             var p = "<b>Pression</b><br>%1hPa"
             var h = "<b>Humidité</b><br>%1%"
             var d = "<b>%1</b>"
             var f= "%1.svg"
             var time="%1 %2"
-        var img="%1.svg"
+            var img="%1.svg"
+            var c="%1"
             capt.refresh()
+            
             msg_tmp.text = t.arg(capt.temp.toFixed(0))
             msg_humi.text = h.arg(capt.humi.toFixed(0))
             msg_press.text = p.arg(capt.press.toFixed(1))
@@ -222,6 +224,30 @@
             //info.txt=time.arg(new Date().toLocaleDateString(Qt.locale("fr_FR"), "ddd dd MM yyyy "),new Date().toLocaleTimeString(Qt.locale("fr_FR"),"hh:mm"))
             des.text=d.arg(capt.des)
             image2.source=f.arg(capt.fleche)
+            radian.color=c.arg(capt.color)
+        }
+        
+        function update_demo() {
+            var t = "<b>Température</b><br>%1°C"
+            var p = "<b>Pression</b><br>%1hPa"
+            var h = "<b>Humidité</b><br>%1%"
+            var d = "<b>%1</b>"
+            var f= "%1.svg"
+            var time="%1 %2"
+            var img="%1.svg"
+            var c="%1"
+            capt.refresh_demo()
+            
+            msg_tmp.text = t.arg(capt.temp.toFixed(0))
+            msg_humi.text = h.arg(capt.humi.toFixed(0))
+            msg_press.text = p.arg(capt.press.toFixed(1))
+            info.text="<b>"+new Date().toLocaleDateString(Qt.locale("fr_FR"), "ddd dd MM yyyy ") +" "+ new Date().toLocaleTimeString(Qt.locale("fr_FR"),"hh:mm") +"</b>"
+            image1.source=img.arg(capt.img)
+            //info.txt=time.arg(new Date().toLocaleDateString(Qt.locale("fr_FR"), "ddd dd MM yyyy "),new Date().toLocaleTimeString(Qt.locale("fr_FR"),"hh:mm"))
+            des.text=d.arg(capt.des)
+            image2.source=f.arg(capt.fleche)
+            radian.color=c.arg(capt.color)
+
         }
         Timer {
             id: globalTimer
