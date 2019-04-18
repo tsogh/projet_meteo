@@ -14,10 +14,10 @@ class Objets : public QObject
     Q_PROPERTY(QString img READ img     NOTIFY imgChanged)
     Q_PROPERTY(QString fleche READ fleche     NOTIFY flecheChanged)
     Q_PROPERTY(QString color READ color	NOTIFY colorChanged)
+		Q_PROPERTY(QString altitude READ altitude	NOTIFY altitudeChanged)
 
 private:
     int demo_code=1;
-    qreal m_press_zam;
     qreal m_temp=18;
     qreal m_humi= 33;
     qreal m_press=1001;
@@ -25,12 +25,14 @@ private:
     QString m_des;
     QString m_img;
     QString m_trend;
+		qreal m_altitude;
+		qreal m_press_corrige
     struct bme280_dev m_dev;
     QString m_fleche;
     std::vector<qreal> his_h;
     std::vector<qreal> his_m;
     std::vector<qreal> his_s;
-    struct bme280_data data; 
+    struct bme280_data data;
 signals:
     void tempChanged();
     void humiChanged();
@@ -39,8 +41,9 @@ signals:
     void imgChanged();
     void flecheChanged();
     void colorChanged();
+		void altitudeChanged();
 public slots:
-	void refresh();
+		void refresh();
     void refresh_demo();
 public:
     qreal calcul_tendance();
@@ -52,9 +55,11 @@ public:
     qreal temp() const;
     qreal humi() const;
     qreal press() const;
+		qreal altitude() const;
     QString des() const;
     QString img() const;
     QString fleche() const;
     QString color() const;
+		void calcul_altitude();
 
 };

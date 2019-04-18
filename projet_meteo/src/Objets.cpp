@@ -14,47 +14,55 @@
 using namespace std;
 
 // convert pression atmospherique sonde -> pression niveau de la mer
-qreal convert_pressAbs(qreal press, qreal altitude,qreal temp){
+void convert_pressAbs(qreal press, qreal altitude,qreal temp){
     qreal Kelvin=temp+273.1;
-return press+1013.25*(1-qPow((Kelvin-0.0065*altitude)/Kelvin,5.255));
+    m_press_corrige=press+1013.25*(1-qPow((Kelvin-0.0065*altitude)/Kelvin,5.255));
 }
-
+void Objets::calcul_altitude(){
+  m_altitude= 44330*(1-qPow(m_press_corrige/m_press,1/5.255));
+}
 void Objets::table_rslt_zambetti(int code){
 
-    if(code==1){m_des = "Beau temps stable"; m_img="day"; m_code_couleur="#1e90ff";}
-    if(code==2){m_des = "Beau temps"; m_img="day"; m_code_couleur="#1e90ff";}
-    if(code==3){m_des = "Amélioration"; m_img="day";m_code_couleur="#1e90ff";}
-    if(code==4){m_des = "Bien, deviens nuageux"; m_img="cloudy1";m_code_couleur="#1e90ff";}
-    if(code==5){m_des = "Bien, possibles averses"; m_img="rainy-2";m_code_couleur="#ebf5ff";}
-    if(code==6){m_des = "Assez bien, en amélioration"; m_img="cloudy";m_code_couleur="#ebf5ff";}
-    if(code==7){m_des = "Assez bien, averses probable"; m_img="rainy-3";m_code_couleur="#ebf5ff";}
-    if(code==8){m_des = "Assez Bien, risque d'averses <br> plus tard"; m_img="rainy-3";m_code_couleur="#ebf5ff";}
-    if(code==9){m_des = "Des averses, en amélioration"; m_img="rainy-4";m_code_couleur="#71808d";}
-    if(code==10){m_des = "Changeant avec amélioration"; m_img="cloudy1";m_code_couleur="#71808d";}
-    if(code==11){m_des = "Assez bien, averses probables"; m_img="rainy-4";m_code_couleur="#71808d";}
-    if(code==12){m_des = "Plutôt nuageux, en amélioration"; m_img="cloudy2";m_code_couleur="#71808d";}
-    if(code==13){m_des = "Nuageux, probable amélioration"; m_img="cloudy2";m_code_couleur="#71808d";}
-    if(code==14){m_des = "Pluvieux avec intervalles <br> ensoleillé"; m_img="rainy-2";m_code_couleur="#71808d";}
-    if(code==15){m_des = "Pluvieux, devenant nuageux"; m_img="rainy-5";m_code_couleur="#71808d";}
-    if(code==16){m_des = "Changeant avec un peu de pluie"; m_img="rainy-5";m_code_couleur="#71808d";}
-    if(code==17){m_des = "Nuageux, petite pluie <br>par intermitance"; m_img="rainy-4";m_code_couleur="#5e80a0";}
-    if(code==18){m_des = "Nuageux, pluie plus tard"; m_img="rainy-4";m_code_couleur="#5e80a0";}
-    if(code==19){m_des = "Nuageux, pluie à l'occasion"; m_img="rainy-4";m_code_couleur="#5e80a0";}
-    if(code==20){m_des = "Très nuageux"; m_img="cloudy";m_code_couleur="#5e80a0";}
-    if(code==21){m_des = "Pluie par intermittence,se détériore"; m_img="rainy-5";m_code_couleur="#5e80a0";}
-    if(code==22){m_des = "Pluie par intermittence, très nuageux"; m_img="rainy-5"; m_code_couleur="#5e80a0";}
-    if(code==23){m_des = "Pluie à intervalles fréquents"; m_img="rainy-6";m_code_couleur="#5e80a0";}
-    if(code==24){m_des = "Très instable, pluie";m_img="rainy-7"; m_code_couleur="#5e80a0";}
-    if(code==25){m_des = "Orage, amélioration possible"; m_img="thunder";m_code_couleur="";}
-    if(code==26){m_des = "Orage, beaucoup de pluie"; m_img="thunder";m_code_couleur="#7b7f83";}
-
+  time_t now =time(0);
+  tm *ltm=localtime(&now);
+  int heure =ltm->tm_hour;
+  int ind_heure=0;
+  if (tm_hour>22 || tm_hour<7){ind_heure=1;}
+    if(code==1){m_des = "Beau temps stable"; m_img=ind_heure==0?"day":"night"; m_code_couleur="#1e90ff";}
+    else if(code==2){m_des = "Beau temps"; m_img=ind_heure==0?"day":"night"; m_code_couleur="#1e90ff";}
+    else if(code==3){m_des = "Amélioration";m_img=ind_heure==0?"day":"night";m_code_couleur="#1e90ff";}
+    else if(code==4){m_des = "Bien, deviens nuageux"; m_img=ind_heure==0?"cloudyday1":"cloudynigh1";m_code_couleur="#1e90ff";}
+    else if(code==5){m_des = "Bien, possibles averses"; m_img="rainy-2";m_code_couleur="#ebf5ff";}
+    else if(code==6){m_des = "Assez bien, en amélioration"; m_img="cloudy";m_code_couleur="#ebf5ff";}
+    else if(code==7){m_des = "Assez bien, averses probable"; m_img="rainy-3";m_code_couleur="#ebf5ff";}
+    else if(code==8){m_des = "Assez Bien, risque d'averses <br> plus tard"; m_img="rainy-3";m_code_couleur="#ebf5ff";}
+    else if(code==9){m_des = "Des averses, en amélioration"; m_img="rainy-4";m_code_couleur="#71808d";}
+    else if(code==10){m_des = "Changeant avec amélioration";m_img=ind_heure==0?"cloudyday1":"cloudynigh1";m_code_couleur="#71808d";}
+    else if(code==11){m_des = "Assez bien, averses probables"; m_img="rainy-4";m_code_couleur="#71808d";}
+    else if(code==12){m_des = "Plutôt nuageux, en amélioration";m_img=ind_heure==0?"cloudyday2":"cloudynigh2";m_code_couleur="#71808d";}
+    else if(code==13){m_des = "Nuageux, probable amélioration"; m_img=ind_heure==0?"cloudyday2":"cloudynigh2";m_code_couleur="#71808d";}
+    else if(code==14){m_des = "Pluvieux avec intervalles <br> ensoleillé"; m_img="rainy-2";m_code_couleur="#71808d";}
+    else if(code==15){m_des = "Pluvieux, devenant nuageux"; m_img="rainy-5";m_code_couleur="#71808d";}
+    else if(code==16){m_des = "Changeant avec un peu de pluie"; m_img="rainy-5";m_code_couleur="#71808d";}
+    else if(code==17){m_des = "Nuageux, petite pluie <br>par intermitance"; m_img="rainy-4";m_code_couleur="#5e80a0";}
+    else if(code==18){m_des = "Nuageux, pluie plus tard"; m_img="rainy-4";m_code_couleur="#5e80a0";}
+    else if(code==19){m_des = "Nuageux, pluie à l'occasion"; m_img="rainy-4";m_code_couleur="#5e80a0";}
+    else if(code==20){m_des = "Très nuageux"; m_img="cloudy";m_code_couleur="#5e80a0";}
+    else if(code==21){m_des = "Pluie par intermittence,se détériore"; m_img="rainy-5";m_code_couleur="#5e80a0";}
+    else if(code==22){m_des = "Pluie par intermittence, très nuageux"; m_img="rainy-5"; m_code_couleur="#5e80a0";}
+    else if(code==23){m_des = "Pluie à intervalles fréquents"; m_img="rainy-6";m_code_couleur="#5e80a0";}
+    else if(code==24){m_des = "Très instable, pluie";m_img="rainy-7"; m_code_couleur="#5e80a0";}
+    else if(code==25){m_des = "Orage, amélioration possible"; m_img="thunder";m_code_couleur="";}
+    else if(code==26){m_des = "Orage, beaucoup de pluie"; m_img="thunder";m_code_couleur="#7b7f83";}
+    else{m_des = "erreur table";}
 }
 void Objets::recup_val(){
     data=lecture_data_capteur(&m_dev);
     m_temp=data.temperature;
     m_humi=data.humidity;
     m_press=data.pressure/100;
-    m_press_zam=convert_pressAbs(m_press,151,m_temp);
+    convert_pressAbs(m_press,151,m_temp);
+    calcul_altitude();
 
 }
 qreal Objets::calcul_tendance(){
@@ -76,17 +84,17 @@ qreal Objets::calcul_tendance(){
     }
 void Objets::calcul_zam(){
     int code;
-    code= calc_zambretti_alt(m_press_zam,m_press-calcul_tendance());
+    code= calc_zambretti_alt(m_press_corrige,m_press-calcul_tendance());
     table_rslt_zambetti(code);
     m_fleche=QString::fromStdString(get_trend_text(m_press-calcul_tendance()));
-    
+
     }
 void Objets::refresh() {
-    
+
     recup_val();
     histo_press();
     calcul_zam();
-    
+
 }
 void Objets::refresh_demo() {
     recup_val();
@@ -150,4 +158,8 @@ QString  Objets::fleche() const {
 QString  Objets::color() const {
 
     return m_code_couleur;
+}
+qreal  Objets::altitude() const {
+
+    return m_altitude;
 }
