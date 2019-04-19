@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Window 2.0
+import QtGraphicalEffects 1.0
 
 Window
 {
@@ -142,7 +143,7 @@ Window
                 }Rectangle {
                     id:rec14
                     x:0
-                    y:rec12.height*3
+                    y:rec12.height*2.8
                     width: rec1.width
                     height: rec1.height/4
                     color: "transparent"
@@ -152,11 +153,27 @@ Window
                         anchors.centerIn: rec14
                         width: rec1.width/2
                         horizontalAlignment: Text.AlignHCenter
-                        font.pixelSize: rec1.height/20
+                        font.pixelSize: rec1.height/30
                     }
 
-
                 }
+                /*Rectangle {
+                    id:rec15
+                    x:2
+                    y:rec12.height*3.2
+                    width: rec1.width
+                    height: rec1.height/4
+                    color: "transparent"
+                    Text {
+                        id: msg_levee_soleil
+                        text: qsTr("<b>Lever : </b>7:10  &nbsp; <b>Coucher : </b>22:00")
+                        anchors.centerIn: rec15
+                        width: rec1.width/2
+                        horizontalAlignment: Text.AlignHCenter
+                        font.pixelSize: rec1.height/30
+                    }
+
+                }*/
 
             }
 
@@ -180,8 +197,8 @@ Window
                         sourceSize.width: Math.min(rec21.width,rec21.height)
                         sourceSize.height: Math.min(rec21.width,rec21.height)
                         anchors.centerIn: rec21
-                        scale: Qt.KeepAspectRatio*1.25
-                        source: "/img/day.svg"
+                        scale: Qt.KeepAspectRatio*2.25
+                        source: "img/day.svg"
                     }
 
                 }Rectangle {
@@ -197,8 +214,18 @@ Window
                         sourceSize.width: Math.min(rec22.width,rec22.height)
                         sourceSize.height: Math.min(rec22.width,rec22.height)
                         anchors.centerIn: rec22
-                        source: "/img/Failling.svg"
+                        source: "img/Steady.svg"
                         scale: Qt.KeepAspectRatio/2
+                        visible: false
+                    }
+                    ColorOverlay{
+                        id:color_fleche
+                        scale: Qt.KeepAspectRatio/2
+                        anchors.fill: image_fleche
+                        source:image_fleche
+                        //transform: Rotation { origin.x:rec22.x/2; origin.y:rec22.y/2; angle: 45}
+                        color:"red"
+                        
                     }
 
                 }Rectangle {
@@ -215,35 +242,39 @@ Window
                         //y: element5.y +50
                         width: rec2.width
                         anchors.centerIn: rec23
-                        horizontalAlignment: Text.AlignHCenter
+                        horizontalAlignment: Text.AlignH&Center
                         font.pixelSize: rec2.height/20
                     }
                 }
             }
         }
-
+ 
     function update() {
+
+        
         var temp = "<b>Température</b><br>%1°C"
         var press = "<b>Pression</b><br>%1hPa"
         var humi = "<b>Humidité</b><br>%1%"
         var desc = "<b>%1</b>"
-        var weather= "/img/%1.svg"
+        var weather= "img/%1.svg"
         var time="%1 %2"
-        var fleche="/img/%1.svg"
+        var fleche="img/%1.svg"
         var col="%1"
-        var altitude=<b>Altitude</b><br>%1%m"
+        var alti="<b>Altitude</b><br>%1m"
         capt.refresh()
-
+        if(capt.fleche=="Falling"){color_fleche.color="red";}
+        if(capt.fleche=="Steady"){color_fleche.color="green";}
+        if(capt.fleche=="Rising"){color_fleche.color="yellow";}
         msg_tmp.text = temp.arg(capt.temp.toFixed(0))
         msg_humi.text = humi.arg(capt.humi.toFixed(0))
         msg_press.text = press.arg(capt.press.toFixed(1))
         info.text="<b>"+new Date().toLocaleDateString(Qt.locale("fr_FR"), "ddd dd MM yyyy ") +" "+ new Date().toLocaleTimeString(Qt.locale("fr_FR"),"hh:mm") +"</b>"
-        image_fleche.source=fleche.arg(capt.img)
+        image_fleche.source=fleche.arg(capt.fleche)
         //info.txt=time.arg(new Date().toLocaleDateString(Qt.locale("fr_FR"), "ddd dd MM yyyy "),new Date().toLocaleTimeString(Qt.locale("fr_FR"),"hh:mm"))
         des.text=desc.arg(capt.des)
-        image_meteo.source=weather.arg(capt.fleche)
+        image_meteo.source=weather.arg(capt.img)
         radian.color=col.arg(capt.color)
-        msg_altitude=altitude.arg(capt.altitude)
+        msg_altitude.text=alti.arg(capt.alti.toFixed(0))
     }
 
     function update_demo() {
@@ -266,7 +297,26 @@ Window
         des.text=d.arg(capt.des)
         image2.source=f.arg(capt.fleche)
         radian.color=c.arg(capt.color)
+        
+        
 
+    }
+    function upadate_lever_couche(){
+    console.log("okkkkk")
+        var leve = "<b>Lever : </b>%1 &nbsp; <b>Coucher : </b>%2"
+        var xhr = new XMLHttpRequest();
+        var url = "http://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400";
+        xhr.open("GET", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var json = JSON.parse(xhr.responseText);
+                msg_levee_soleil.text=leve.arg(JSON.parse(JSON.stringify(json.results)).sunrise,JSON.parse(JSON.stringify(json.results)).sunset)
+                console.log(JSON.parse(JSON.stringify(json.results)).sunrise);
+                
+            }
+        };
+    
     }
     Timer {
         id: globalTimer
@@ -276,4 +326,12 @@ Window
         triggeredOnStart: true
         onTriggered: update()
     }
+       /* Timer {
+        id: globalTimer2
+        interval: 10000
+        repeat: true
+        running: true
+        triggeredOnStart: true
+        onTriggered: upadate_lever_couche()
+    }*/
 }

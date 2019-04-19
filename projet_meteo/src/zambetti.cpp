@@ -159,4 +159,5 @@ int calc_zambretti_alt(float pressure,float trend){
                 else if(pressure>=970 && pressure<980){return 24;}
                 else if(pressure<970){return 26;}
             }
+        return -1;
     }
