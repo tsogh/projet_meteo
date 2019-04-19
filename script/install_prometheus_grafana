@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "deb https://packages.grafana.com/oss/deb stable main" >>/etc/apt/sources.list.d/grafana.list
+curl https://packages.grafana.com/gpg.key | apt-key add -
+apt-get update
+
+apt-get install -f prometheus grafana libcurl4-gnutls-dev zlib1g-dev
+systemctl daemon-reload
+systemctl enable grafana-server
+systemctl start grafana-server
