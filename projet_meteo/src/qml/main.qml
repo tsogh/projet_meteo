@@ -1,6 +1,7 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Window 2.0
 import QtGraphicalEffects 1.0
+import QtQuick.Controls 2.0
 
 Window
 {
@@ -76,8 +77,61 @@ Window
                 MouseArea{
                     id: buttonMouseArea
                     anchors.fill: recbouton1
-                    onClicked: console.log(buttonLabel.text + " clicked" )
+                    //onClicked: console.log(" clicked" )
+                    onClicked: { popup.open();globalTimer.stop();}
                 }
+                
+                Popup {
+                id:popup;
+
+            Column{
+                    Text {
+                        id: titre_popup
+                        text: qsTr("Configuration :")
+                    }
+            Row{
+                    Text {
+                        id: msg_tmp544
+                        text: qsTr("Ville : ")
+                    }
+                    TextEdit{
+                        id: msg_tmp1
+                        text: qsTr("<b>Température2</b><br>%1°")
+                    }
+
+                }
+                Row{
+                    Text {
+                        id: msg_tmp5444
+                        text: qsTr("Altitude : ")
+                    }
+                    TextEdit {
+                        id: msg_tmp14
+                        text: qsTr("<b>Température2</b><br>%1°")
+                    }
+
+            }
+                        Rectangle {
+                id: recbouton12
+
+
+                Text{
+                    id: bouton_ok
+                    text: qsTr("<b>ok</b>")
+
+                }
+                MouseArea{
+                    id: buttonMouseArea1
+                    anchors.fill: bouton_ok
+                    //onClicked: console.log(" clicked" )
+                    onClicked: {popup.close()
+                                maj_config()}
+                }
+                }
+            }
+                }
+                
+                
             }
 
             Rectangle {
@@ -276,7 +330,11 @@ Window
         radian.color=col.arg(capt.color)
         msg_altitude.text=alti.arg(capt.alti.toFixed(0))
     }
-
+    function maj_config(){
+    globalTimer.start();
+    console.log(" clicked" )
+    
+    }
     function update_demo() {
         var t = "<b>Température</b><br>%1°C"
         var p = "<b>Pression</b><br>%1hPa"
