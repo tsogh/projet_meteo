@@ -24,7 +24,7 @@ Window
             //color: "#00bfff"
 
             Text{
-                id : titre
+                id :msg_titre
                 x: 8
                 width: 476
                 text: qsTr("<b>Météo à Toulouse</b>")
@@ -80,9 +80,11 @@ Window
                     //onClicked: console.log(" clicked" )
                     onClicked: { popup.open();globalTimer.stop();}
                 }
-                
+
                 Popup {
                 id:popup;
+                width: 200
+                height: 300
 
             Column{
                     Text {
@@ -91,47 +93,43 @@ Window
                     }
             Row{
                     Text {
-                        id: msg_tmp544
+                        id: text_ville
                         text: qsTr("Ville : ")
                     }
                     TextEdit{
-                        id: msg_tmp1
-                        text: qsTr("<b>Température2</b><br>%1°")
+                        id: msg_ville
+                        text: qsTr("Toulouse")
                     }
 
                 }
                 Row{
                     Text {
-                        id: msg_tmp5444
+                        id: text_alti
                         text: qsTr("Altitude : ")
                     }
                     TextEdit {
-                        id: msg_tmp14
-                        text: qsTr("<b>Température2</b><br>%1°")
+                        id: msg_alti
+                        text: qsTr("151")
                     }
 
             }
-                        Rectangle {
-                id: recbouton12
 
-
-                Text{
+            Row{
+                Button{
                     id: bouton_ok
                     text: qsTr("<b>ok</b>")
+                    onClicked: {popup.close()
+                                maj_config()
+                                }
 
                 }
-                MouseArea{
-                    id: buttonMouseArea1
-                    anchors.fill: bouton_ok
-                    //onClicked: console.log(" clicked" )
-                    onClicked: {popup.close()
-                                maj_config()}
+
                 }
-                }
+                
             }
                 }
-                
-                
+
+
             }
 
             Rectangle {
@@ -251,7 +249,7 @@ Window
                         sourceSize.width: Math.min(rec21.width,rec21.height)
                         sourceSize.height: Math.min(rec21.width,rec21.height)
                         anchors.centerIn: rec21
-                        scale: Qt.KeepAspectRatio*2.25
+                        scale: Qt.KeepAspectRatio*1.6
                         source: "img/day.svg"
                     }
 
@@ -279,7 +277,7 @@ Window
                         source:image_fleche
                         //transform: Rotation { origin.x:rec22.x/2; origin.y:rec22.y/2; angle: 45}
                         color:"red"
-                        
+
                     }
 
                 }Rectangle {
@@ -296,7 +294,7 @@ Window
                         //y: element5.y +50
                         width: rec2.width
                         anchors.centerIn: rec23
-                        horizontalAlignment: Text.AlignH&Center
+                        horizontalAlignment: Text.AlignHCenter
                         font.pixelSize: rec2.height/20
                     }
                 }
@@ -305,7 +303,7 @@ Window
  
     function update() {
 
-        
+           var titre = "<b>Météo à %1</b>"
         var temp = "<b>Température</b><br>%1°C"
         var press = "<b>Pression</b><br>%1hPa"
         var humi = "<b>Humidité</b><br>%1%"
@@ -329,13 +327,22 @@ Window
         image_meteo.source=weather.arg(capt.img)
         radian.color=col.arg(capt.color)
         msg_altitude.text=alti.arg(capt.alti.toFixed(0))
+        msg_titre.text=titre.arg(msg_ville.text);
+        console.log("test2"+msg_ville.text);
+        
+        
     }
     function maj_config(){
+    var t = "<b>Météo à %1</b>"
     globalTimer.start();
-    console.log(" clicked" )
-    
+    console.log("test"+msg_ville.text);
+    capt.alti=msg_alti;
+    //msg_titre.text=t.arg(msg_ville.text);
+    //msg_titre.text="pink";
+
     }
     function update_demo() {
+    var titre = "<b>Météo à %1</b>"
         var t = "<b>Température</b><br>%1°C"
         var p = "<b>Pression</b><br>%1hPa"
         var h = "<b>Humidité</b><br>%1%"
@@ -355,8 +362,10 @@ Window
         des.text=d.arg(capt.des)
         image2.source=f.arg(capt.fleche)
         radian.color=c.arg(capt.color)
+        msg_titre.text=titre.arg(msg_tmp.text);
         
         
+
 
     }
     function upadate_lever_couche(){
@@ -371,10 +380,10 @@ Window
                 var json = JSON.parse(xhr.responseText);
                 msg_levee_soleil.text=leve.arg(JSON.parse(JSON.stringify(json.results)).sunrise,JSON.parse(JSON.stringify(json.results)).sunset)
                 console.log(JSON.parse(JSON.stringify(json.results)).sunrise);
-                
+
             }
         };
-    
+
     }
     Timer {
         id: globalTimer

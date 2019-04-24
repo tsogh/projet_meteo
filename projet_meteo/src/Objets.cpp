@@ -166,3 +166,6 @@ qreal  Objets::alti() const {
 
     return m_alti;
 }
+void Objets::set_alti(qreal alti){
+  m_alti=alti;
+}

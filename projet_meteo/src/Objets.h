@@ -14,7 +14,7 @@ class Objets : public QObject
     Q_PROPERTY(QString img READ img     NOTIFY imgChanged)
     Q_PROPERTY(QString fleche READ fleche     NOTIFY flecheChanged)
     Q_PROPERTY(QString color READ color	NOTIFY colorChanged)
-    Q_PROPERTY(qreal alti READ alti	NOTIFY altiChanged)
+    Q_PROPERTY(qreal alti READ alti	WRITE set_alti NOTIFY altiChanged)
 
 private:
     int demo_code=1;
@@ -62,5 +62,6 @@ public:
     QString color() const;
 		void calcul_altitude();
         void convert_pressAbs(qreal press, qreal altitude,qreal temp);
+		void set_alti(qreal alti);
 
 };
