@@ -34,7 +34,7 @@ qDebug()<<"code"<<code;
     case 1: m_des = "Beau temps stable"; m_img=ind_heure==0?"day":"night"; m_code_couleur="#1e90ff"; break;
     case 2: m_des = "Beau temps"; m_img=ind_heure==0?"day":"night"; m_code_couleur="#1e90ff";break;
     case 3 :m_des = "Amélioration";m_img=ind_heure==0?"day":"night";m_code_couleur="#1e90ff";break;
-    case 4 :m_des = "Bien, nuageux"; m_img=ind_heure==0?"cloudyday1":"cloudynigh1";m_code_couleur="#1e90ff";break;
+    case 4 :m_des = "Bien, deviens nuageux"; m_img=ind_heure==0?"cloudyday1":"cloudynigh1";m_code_couleur="#1e90ff";break;
     case 5 :m_des = "Bien, possibles averses"; m_img="rainy-2";m_code_couleur="#ebf5ff";break;
     case 6 :m_des = "Assez bien, en amélioration"; m_img="cloudy";m_code_couleur="#ebf5ff";break;
     case 7 :m_des = "Assez bien, averses probable"; m_img="rainy-3";m_code_couleur="#ebf5ff";break;
@@ -47,7 +47,7 @@ qDebug()<<"code"<<code;
     case 14 :m_des = "Pluvieux avec intervalles <br> ensoleillé"; m_img="rainy-2";m_code_couleur="#71808d";break;
     case 15 :m_des = "Pluvieux, devenant nuageux"; m_img="rainy-5";m_code_couleur="#71808d";break;
     case 16 :m_des = "Changeant avec un peu de pluie"; m_img="rainy-5";m_code_couleur="#71808d";break;
-    case 17 :m_des = "Nuageux, fine pluie <br>par intermitance"; m_img="rainy-4";m_code_couleur="#5e80a0";break;
+    case 17 :m_des = "Nuageux, petite pluie <br>par intermitance"; m_img="rainy-4";m_code_couleur="#5e80a0";break;
     case 18 :m_des = "Nuageux, pluie plus tard"; m_img="rainy-4";m_code_couleur="#5e80a0";break;
     case 19 :m_des = "Nuageux, pluie à l'occasion"; m_img="rainy-4";m_code_couleur="#5e80a0";break;
     case 20:m_des = "Très nuageux"; m_img="cloudy";m_code_couleur="#5e80a0";break;
@@ -65,8 +65,8 @@ void Objets::recup_val(){
     m_temp=data.temperature;
     m_humi=data.humidity;
     m_press=data.pressure/100;
-    convert_pressAbs(m_press,151,m_temp);
-    calcul_altitude();
+    convert_pressAbs(m_press,m_alti,m_temp);
+    //calcul_altitude();
 
 }
 qreal Objets::calcul_tendance(){
@@ -88,7 +88,7 @@ qreal Objets::calcul_tendance(){
     }
 void Objets::calcul_zam(){
     int code;
-    code= calc_zambretti(m_press_corrige,m_press-calcul_tendance());
+    code= calc_zambretti_alt(m_press_corrige,m_press-calcul_tendance());
     table_rslt_zambetti(code);
     m_fleche=QString::fromStdString(get_trend_text(m_press-calcul_tendance()));
 

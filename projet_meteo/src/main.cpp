@@ -5,10 +5,10 @@
 #include <QtDebug>
 int main(int argc, char *argv[])
 {
-	QGuiApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
     Objets capt;
-	QQmlApplicationEngine engine;
+    QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("capt", &capt);
     engine.load(QUrl(QStringLiteral("src/qml/main.qml")));
-	return app.exec();
+    return app.exec();
 }

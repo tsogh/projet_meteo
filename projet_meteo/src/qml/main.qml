@@ -68,7 +68,7 @@ Window
 
                 Text{
                     id: bouton_courbes
-                    text: qsTr("<b>Courbes</b>")
+                    text: qsTr("<b>Configuration</b>")
                     anchors.centerIn: recbouton1
                     width: recbouton1.width
                     horizontalAlignment: Text.AlignHCenter
@@ -83,41 +83,51 @@ Window
 
                 Popup {
                 id:popup;
-                width: 200
-                height: 300
-
+                width: 175
+                height: 130
+                x:10
             Column{
                     Text {
                         id: titre_popup
-                        text: qsTr("Configuration :")
+                        color:"#1e90ff"
+                        text: qsTr("<b>Configuration :</b>")
                     }
             Row{
                     Text {
                         id: text_ville
-                        text: qsTr("Ville : ")
+                        text: qsTr("<b>Ville : </b>")
                     }
-                    TextEdit{
+                    TextInput{
                         id: msg_ville
-                        text: qsTr("Toulouse")
+                        color: "black"
+                        text: "Toulouse"
+                        
+                        
                     }
 
                 }
                 Row{
                     Text {
                         id: text_alti
-                        text: qsTr("Altitude : ")
+                        text: qsTr("<b>Altitude : </b>")
                     }
-                    TextEdit {
+                    TextInput {
+                        color: "black"
                         id: msg_alti
-                        text: qsTr("151")
+                        text: "151"
+                        
                     }
 
             }
-
+            Row{    width: 30
+                    height: 20}
             Row{
+            x:100
                 Button{
                     id: bouton_ok
                     text: qsTr("<b>ok</b>")
+                    width: 40
+                    height: 30
                     onClicked: {popup.close()
                                 maj_config()
                                 }
@@ -328,15 +338,15 @@ Window
         radian.color=col.arg(capt.color)
         msg_altitude.text=alti.arg(capt.alti.toFixed(0))
         msg_titre.text=titre.arg(msg_ville.text);
-        console.log("test2"+msg_ville.text);
+        //console.log("test2"+msg_ville.text);
         
         
     }
     function maj_config(){
     var t = "<b>Météo à %1</b>"
     globalTimer.start();
-    console.log("test"+msg_ville.text);
-    capt.alti=msg_alti;
+    console.log("test"+msg_alti.text);
+    capt.alti=msg_alti.text;
     //msg_titre.text=t.arg(msg_ville.text);
     //msg_titre.text="pink";
 
@@ -363,6 +373,7 @@ Window
         image2.source=f.arg(capt.fleche)
         radian.color=c.arg(capt.color)
         msg_titre.text=titre.arg(msg_tmp.text);
+        console.log("test2"+msg_alti);
         
         
 

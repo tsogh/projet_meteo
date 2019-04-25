@@ -25,7 +25,7 @@ private:
     QString m_des;
     QString m_img;
     QString m_trend;
-		qreal m_alti=0;
+		qreal m_alti=151;
 		qreal m_press_corrige;
     struct bme280_dev m_dev;
     QString m_fleche;
