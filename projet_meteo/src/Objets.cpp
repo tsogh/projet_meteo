@@ -13,18 +13,21 @@
 #include <numeric>
 using namespace std;
 
+// code d'interface pour le code qml
+
 // convert pression atmospherique sonde -> pression niveau de la mer
 void Objets::convert_pressAbs(qreal press, qreal altitude,qreal temp){
     qreal Kelvin=temp+273.1;
     m_press_corrige=press+1013.25*(1-qPow((Kelvin-0.0065*altitude)/Kelvin,5.255));
 }
+// calcul de l'altitude avec la pression
 void Objets::calcul_altitude(){
-   //qDebug()<<pow((float)m_press_corrige/(float)m_press,1/5.255);
-    //qDebug()<<(pow(m_press_corrige/m_press,1/5.255))-1;
   m_alti= 44330*(pow(m_press_corrige/m_press,1/5.255)-1);
 }
+
+// table du résultat du nombre de zambretti
 void Objets::table_rslt_zambetti(int code){
-qDebug()<<"code"<<code;
+  //recup de l'heure pour modification de l'image
   time_t now =time(0);
   tm *ltm=localtime(&now);
   int heure =ltm->tm_hour;
@@ -60,6 +63,7 @@ qDebug()<<"code"<<code;
     default: m_des="erreur table"; break;
 }
 }
+// fonction appel du capteur pour la récuperation des données
 void Objets::recup_val(){
     data=lecture_data_capteur(&m_dev);
     m_temp=data.temperature;
@@ -69,6 +73,7 @@ void Objets::recup_val(){
     //calcul_altitude();
 
 }
+//historisation, récuperation de la données pour la tendances
 qreal Objets::calcul_tendance(){
     qreal tendance;
     if (his_h.size()>0){
@@ -86,6 +91,7 @@ qreal Objets::calcul_tendance(){
 
     return tendance;
     }
+  //calcul de zambretti
 void Objets::calcul_zam(){
     int code;
     code= calc_zambretti_alt(m_press_corrige,m_press-calcul_tendance());
@@ -93,11 +99,12 @@ void Objets::calcul_zam(){
     m_fleche=QString::fromStdString(get_trend_text(m_press-calcul_tendance()));
 
     }
+// rafraichissement de la page qml
 void Objets::refresh() {
     recup_val();
     histo_press();
     calcul_zam();
-    qDebug()<<"press"<<m_press_corrige;
+
 }
 void Objets::refresh_demo() {
     recup_val();
@@ -108,6 +115,7 @@ void Objets::refresh_demo() {
         demo_code=1;
     }
 }
+//historisation de al tendance, calcul de moyenne des seconde, minute et heure
 void Objets::histo_press(){
     his_s.push_back(m_press);
     if (his_s.size()==60) {
@@ -129,10 +137,12 @@ void Objets::histo_press(){
       his_h.erase(his_h.begin());
     }
 }
+//Constructeur de l'Objets
 Objets::Objets() {
     m_dev= init_capteur();
 }
 
+// getteurs
 qreal  Objets::temp() const {
 
     return m_temp;
@@ -165,6 +175,10 @@ QString  Objets::color() const {
 qreal  Objets::alti() const {
 
     return m_alti;
+}
+vector<string>  Objets::vec_histo() const {
+
+    return m_vec_histo;
 }
 void Objets::set_alti(qreal alti){
   m_alti=alti;

@@ -16,37 +16,37 @@ int main(int argc, char** argv) {
 	using namespace prometheus;
 	struct bme280_data data;
 	struct bme280_dev dev=init_capteur();
-	
-	// create an http server running on port 8080
+
+	// Server http sur le port 8080
 	Exposer exposer{"8080"};
 
-	// create a metrics registry with component=main labels applied to all its
-	// metrics
+
+	// Registre de métrique
 	auto registry = std::make_shared<Registry>();
 
 	// add a new counter family to the registry (families combine values with the
 	// same name, but distinct label dimensions)
+	//Utilisation d'un Gauge, une métrique qui représente une valeur numérique unique
 	auto& temp = BuildGauge().Name("temperature")
-							 .Help("Temperatures")
-							 .Labels({{"meteo", "temperature"}})
-							 .Register(*registry)
-			                 .Add({{"metric", "temp"}});
+							 						 .Help("Temperatures")
+							             .Labels({{"meteo", "temperature"}})
+							             .Register(*registry)
+			                     .Add({{"metric", "temp"}});
 	auto& humi = BuildGauge().Name("humidite")
-							 .Help("Humidite")
-			                 .Labels({{"meteo", "humidite"}})
-			                 .Register(*registry)
-			                 .Add({{"metric", "humidity"}});
+							             .Help("Humidite")
+			                     .Labels({{"meteo", "humidite"}})
+			                     .Register(*registry)
+			                     .Add({{"metric", "humidity"}});
 	auto& press = BuildGauge().Name("pression")
-							  .Help("Pression")
-							  .Labels({{"meteo", "pression"}})
-							  .Register(*registry)
-							  .Add({{"metric", "pression"}});
+							              .Help("Pression")
+							              .Labels({{"meteo", "pression"}})
+							              .Register(*registry)
+							              .Add({{"metric", "pression"}});
 
-	// ask the exposer to scrape the registry on incoming scrapes
 	exposer.RegisterCollectable(registry);
 
 	for (;;) {
-		//std::this_thread::sleep_for(std::chrono::seconds(1));
+		//boucle d'envoie des données
 		data=lecture_data_capteur(&dev);
 		temp.Set(data.temperature);
 		humi.Set(data.humidity);

@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include "Objets.h"
 #include <QtDebug>
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);

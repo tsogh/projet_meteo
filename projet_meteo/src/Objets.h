@@ -3,7 +3,7 @@
 #include <QString>
 #include "zambetti.h"
 #include "bme280.h"
-#include "vector"
+#include <vector>
 class Objets : public QObject
 {
 	Q_OBJECT
@@ -15,6 +15,7 @@ class Objets : public QObject
     Q_PROPERTY(QString fleche READ fleche     NOTIFY flecheChanged)
     Q_PROPERTY(QString color READ color	NOTIFY colorChanged)
     Q_PROPERTY(qreal alti READ alti	WRITE set_alti NOTIFY altiChanged)
+    Q_PROPERTY(vector<string> vec_histo READ vec_histo NOTIFY vec_histoChanged)
 
 private:
     int demo_code=1;
@@ -25,14 +26,15 @@ private:
     QString m_des;
     QString m_img;
     QString m_trend;
-		qreal m_alti=151;
-		qreal m_press_corrige;
+    qreal m_alti=151;
+    qreal m_press_corrige;
     struct bme280_dev m_dev;
     QString m_fleche;
     std::vector<qreal> his_h;
     std::vector<qreal> his_m;
     std::vector<qreal> his_s;
     struct bme280_data data;
+    vector<string>  m_vec_histo;
 signals:
     void tempChanged();
     void humiChanged();
@@ -42,6 +44,7 @@ signals:
     void flecheChanged();
     void colorChanged();
     void altiChanged();
+    void vec_histoChanged();
 public slots:
 		void refresh();
     void refresh_demo();
@@ -60,6 +63,7 @@ public:
     QString img() const;
     QString fleche() const;
     QString color() const;
+    vector<string>  vec_histo() const;
 		void calcul_altitude();
         void convert_pressAbs(qreal press, qreal altitude,qreal temp);
 		void set_alti(qreal alti);
