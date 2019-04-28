@@ -104,8 +104,8 @@ Window
                         id: msg_ville
                         color: "black"
                         text: "Toulouse"
-                        
-                        
+
+
                     }
 
                 }
@@ -118,7 +118,7 @@ Window
                         color: "black"
                         id: msg_alti
                         text: "151"
-                        
+
                     }
 
             }
@@ -138,91 +138,13 @@ Window
                 }
 
                 }
-                
-            }
-                }
-
 
             }
-            Rectangle {
-                id: recbouton2
-                y: 10
-                x: recbouton1.width *1.2
-                color: "grey"
-                width: rec.width/8
-                height: rec.height/20
-                //anchors.left: rec.left
-
-                Text{
-                    id: bouton_histo
-                    text: qsTr("<b>Historique</b>")
-                    anchors.centerIn: recbouton2
-                    width: recbouton2.width
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: recbouton1.height/2
-                }
-                MouseArea{
-                    id: buttonMouseArea2
-                    anchors.fill: recbouton2
-                    //onClicked: console.log(" clicked" )
-                    onClicked: { popup2.open();}
-                }
-
-    Popup {
-        id: popup2
-        x: (rec.width - width) / 3.5
-        y: (rec.height - height) / 3.5
-        //parent: ApplicationWindow.overlay
-
-        width: rec.width/2
-        height: rec.height/2
-
-
-        TableView{
-            id:idTable
-        x: (popup2.width - width) / 3.5 -12
-        y: (popup2.height - height) / 3.5 -12
-            width: popup2.width
-            height: popup2.height
-            model: libraryModel                             // Table Data model
-
-            TableViewColumn{ role: "date"  ; title: "Date" ; width: 100 }
-            TableViewColumn{ role: "temp" ; title: "Température" ; width: 100 }
-             TableViewColumn{ role: "press" ; title: "Pression" ; width: 100 }
-              TableViewColumn{ role: "humi" ; title: "Humidité" ; width: 100 }
-              TableViewColumn{ role: "prev" ; title: "Prevision" ; width: 200 }
-
-              itemDelegate: Item {
-                              Text {
-                                anchors.verticalCenter: parent.verticalCenter
-                                color: "green"
-                                elide: styleData.elideMode
-                                text: styleData.value
-                                font.pixelSize: 14
-                              }
-                       }
-        }
-
-        //Data model for Table
-        ListModel {
-            id: libraryModel
-            dynamicRoles: true
-            Component.onCompleted: {
-                //var a =["A Masterpiece","Gabriel"," 500", "1","A Masterpiece1","Gabrie2"," 502"," 500", "1","A Masterpiece1","Gabrie2"," 502"]
-                var vect_histo=capt.vec_histo
-                var ii= 0
-                while(vec_histo.length){
-                libraryModel.append({date: vec_histo[ii] , temp: vec_histo[1+ii] , press: vec_histo[2+ii], humi: vec_histo[3+ii],prev: vec_histo[4+ii]})
-                ii+=4;
-                }
-
-            }
-        }
-
                 }
 
 
             }
+
 
             Rectangle {
                 id:rec1
@@ -421,8 +343,8 @@ Window
         msg_altitude.text=alti.arg(capt.alti.toFixed(0))
         msg_titre.text=titre.arg(msg_ville.text);
         //console.log("test2"+msg_ville.text);
-        
-        
+
+
     }
     function maj_config(){
     var t = "<b>Météo à %1</b>"
@@ -456,8 +378,8 @@ Window
         radian.color=c.arg(capt.color)
         msg_titre.text=titre.arg(msg_tmp.text);
         console.log("test2"+msg_alti);
-        
-        
+
+
 
 
     }
@@ -478,17 +400,7 @@ Window
         };
 
     }
-    function actu_vec(){
-    var vec_histo={}
-    vec_histo=capt.vec_histo
-    vec_histo.push(info.text)
-    vec_histo.push(msg_tmp.text)
-    vec_histo.push(msg_humi.text)
-    vec_histo.push(msg_press.text)
-    vec_histo.push(des.text)
-    
-    
-    }
+
     Timer {
         id: globalTimer
         interval: 1000

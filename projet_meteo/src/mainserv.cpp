@@ -11,7 +11,7 @@
 #include <prometheus/registry.h>
 
 
-int main(int argc, char** argv) {
+int main() {
 	Objets capt;
 	using namespace prometheus;
 	struct bme280_data data;
@@ -24,8 +24,7 @@ int main(int argc, char** argv) {
 	// Registre de métrique
 	auto registry = std::make_shared<Registry>();
 
-	// add a new counter family to the registry (families combine values with the
-	// same name, but distinct label dimensions)
+
 	//Utilisation d'un Gauge, une métrique qui représente une valeur numérique unique
 	auto& temp = BuildGauge().Name("temperature")
 							 						 .Help("Temperatures")

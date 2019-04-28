@@ -4,13 +4,10 @@
 #include <QtMath>
 #include "bme280.h"
 #include "capteur_bme.h"
-#include <utility>
 #include <string>
-#include <tuple>
-#include <vector>
-#include <utility>
 #include <cmath>
 #include <numeric>
+#include <iostream>
 using namespace std;
 
 // code d'interface pour le code qml
@@ -104,6 +101,7 @@ void Objets::refresh() {
     recup_val();
     histo_press();
     calcul_zam();
+    cout<<"test "<<m_press_corrige<<" \n";
 
 }
 void Objets::refresh_demo() {

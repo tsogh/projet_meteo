@@ -4,10 +4,7 @@
 #include <string>
 #include <math.h>
 #include "zambetti.h"
-#include <utility>
 #include <iostream>
-#include <tuple>
-#include <utility>
 using namespace std;
 
 // calcul de la tendance pour le choix de la tables de zambretti

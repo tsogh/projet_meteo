@@ -23,7 +23,7 @@ HEADERS += src/bme280.h \
            src/zambetti.h
 SOURCES += src/bme280.c \
            src/capteur_bme.cpp \
-           src/main2.cpp \
+           src/mainserv.cpp \
            src/Objets.cpp \
            src/zambetti.cpp
 QT += qml
