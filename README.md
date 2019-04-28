@@ -35,7 +35,7 @@ sudo raspi-config
 
 La conexion de la sonde se fait sur les ports GPIO 1 pour l'alimentation, 3 pour le SDA, 5 pour le SDC et 6 pour le GND.
 
-## Compilation
+### Compilation
 
 Se positionner dans le répertoire courant StationMeteo
 
@@ -53,13 +53,13 @@ make
 ```
 Il est conseillé de faire un '''make clean''' entre les deux compilations
 
-## Exécution
+### Exécution
 
 ```
 ./AppMeteo
 ./ServerMeteo
 ```
-## Visualisation des données Grafana et Prometheus
+### Visualisation des données Grafana et Prometheus
 Lancer Prometheus:
 ```systemctl start Prometheus```
 
@@ -78,7 +78,7 @@ Ensuite dans Grafana, ajouter un DashBoard, ensuite ajouter un panel et indiquer
 
 
 
-## Auteurs
+### Auteurs
 
 * **Colinet Maxime** - *Implémentation de de l'application* - [Tsogh](https://github.com/tsogh/)
 
