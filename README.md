@@ -61,16 +61,16 @@ Il est conseillé de faire un '''make clean''' entre les deux compilations
 ```
 ## Visualisation des données Grafana et Prometheus
 Lancer Prometheus:
-'''systemctl start Prometheus'''
+```systemctl start Prometheus```
 
 Modificier le fichier prometheus.yml (etc/prometheus) comme suit:
-'''
+```
 - job_name: ServPro
   # If prometheus-node-exporter is installed, grab stats about the local
   # machine by default.
   static_configs:
     - targets: ['localhost:8080']
-'''
+```
 Ensuite dans Grafana, ajouter un DashBoard, ensuite ajouter un panel et indiquer temperature pour la température, humidite pour le taux d'humitité et pression pour la pression atmosphérique dans le query du panel. Et sauvegardé pour pouvoir afficher les données.
 
 
