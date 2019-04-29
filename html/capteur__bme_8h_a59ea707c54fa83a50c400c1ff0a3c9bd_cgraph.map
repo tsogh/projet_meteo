@@ -1,0 +1,8 @@
+<map id="init_capteur" name="init_capteur">
+<area shape="rect" id="node2" href="$capteur__bme_8cpp.html#a61d05d759826396913c31963c102ed66" title="user_i2c_read" alt="" coords="187,5,290,32"/>
+<area shape="rect" id="node3" href="$capteur__bme_8cpp.html#af8c157ca16fed243ea76c8a1155e8afd" title="user_i2c_write" alt="" coords="185,56,292,83"/>
+<area shape="rect" id="node4" href="$capteur__bme_8cpp.html#adc86d5995b888a6f4ef7dd5647b94f8f" title="user_delay_ms" alt="" coords="183,107,294,133"/>
+<area shape="rect" id="node5" href="$group___b_m_e280.html#gaf0b7d7a19bb48ec9eb3651b79f0c3e85" title="This API is the entry point. It reads the chip&#45;id and calibration data from the sensor. " alt="" coords="193,157,285,184"/>
+<area shape="rect" id="node6" href="$group___b_m_e280.html#ga5d436d907394fde22471347599948205" title="This API sets the oversampling, filter and standby duration (normal mode) settings in the sensor..." alt="" coords="143,208,335,235"/>
+<area shape="rect" id="node7" href="$group___b_m_e280.html#ga17a0eaeb97e43233af3e6aac8bd426d4" title="This API sets the power mode of the sensor. " alt="" coords="149,259,328,285"/>
+</map>
