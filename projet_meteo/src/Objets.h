@@ -16,6 +16,7 @@ class Objets : public QObject
     Q_PROPERTY(QString color READ color	NOTIFY colorChanged)
     Q_PROPERTY(qreal alti READ alti	WRITE set_alti NOTIFY altiChanged)
     Q_PROPERTY(vector<string> vec_histo READ vec_histo NOTIFY vec_histoChanged)
+    Q_PROPERTY(int choix READ choix	WRITE set_choix NOTIFY choixChanged)
 
 private:
     int demo_code=1;
@@ -35,6 +36,7 @@ private:
     std::vector<qreal> his_s;
     struct bme280_data data;
     vector<string>  m_vec_histo;
+    int m_choix= 0;
 signals:
     void tempChanged();
     void humiChanged();
@@ -45,6 +47,7 @@ signals:
     void colorChanged();
     void altiChanged();
     void vec_histoChanged();
+    void choixChanged();
 public slots:
 		void refresh();
     void refresh_demo();
@@ -63,9 +66,11 @@ public:
     QString img() const;
     QString fleche() const;
     QString color() const;
+    int choix() const;
     vector<string>  vec_histo() const;
 		void calcul_altitude();
         void convert_pressAbs(qreal press, qreal altitude,qreal temp);
 		void set_alti(qreal alti);
+        void set_choix(int choix);
 
 };

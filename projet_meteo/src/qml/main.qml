@@ -86,8 +86,8 @@ Window
 
                 Popup {
                 id:popup;
-                width: 175
-                height: 130
+                width: 250
+                height: 175
                 x:10
             Column{
                     Text {
@@ -118,14 +118,23 @@ Window
                         color: "black"
                         id: msg_alti
                         text: "151"
-
+                        }
                     }
-
-            }
+                Row{
+                    Text {
+                        id: des_algo
+                        text: qsTr("<b>Choix algo prévision (0 ou 1)*: </b>")
+                    }
+                    TextInput {
+                        color: "black"
+                        id: msg_algo
+                        text: "0"
+                        }
+                    }
             Row{    width: 30
                     height: 20}
             Row{
-            x:100
+            x:175
                 Button{
                     id: bouton_ok
                     text: qsTr("<b>ok</b>")
@@ -138,6 +147,12 @@ Window
                 }
 
                 }
+                Row{
+                    Text {
+                    font.pointSize: 7
+                        text: qsTr("1 : algorithme de prévision avec les pressions <br> 0 : algorthme avec le numéro de Zambretti ")
+                    }
+                    }
 
             }
                 }
@@ -317,7 +332,7 @@ Window
  
     function update() {
 
-           var titre = "<b>Météo à %1</b>"
+        var titre = "<b>Météo à %1</b>"
         var temp = "<b>Température</b><br>%1°C"
         var press = "<b>Pression</b><br>%1hPa"
         var humi = "<b>Humidité</b><br>%1%"
@@ -351,6 +366,7 @@ Window
     globalTimer.start();
     console.log("test"+msg_alti.text);
     capt.alti=msg_alti.text;
+    capt.choix=msg_algo.text;
     //msg_titre.text=t.arg(msg_ville.text);
     //msg_titre.text="pink";
 

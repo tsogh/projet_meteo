@@ -91,7 +91,9 @@ qreal Objets::calcul_tendance(){
   //calcul de zambretti
 void Objets::calcul_zam(){
     int code;
-    code= calc_zambretti_alt(m_press_corrige,m_press-calcul_tendance());
+cout<<"test choix"<<m_choix<<" \n";
+    if (m_choix==1){code= calc_zambretti_alt(m_press_corrige,m_press-calcul_tendance());}
+    if (m_choix==0){code= calc_zambretti(m_press_corrige,m_press-calcul_tendance());}
     table_rslt_zambetti(code);
     m_fleche=QString::fromStdString(get_trend_text(m_press-calcul_tendance()));
 
@@ -174,10 +176,17 @@ qreal  Objets::alti() const {
 
     return m_alti;
 }
+int  Objets::choix() const {
+
+    return m_choix;
+}
 vector<string>  Objets::vec_histo() const {
 
     return m_vec_histo;
 }
 void Objets::set_alti(qreal alti){
   m_alti=alti;
+}
+void Objets::set_choix(int choix){
+  m_choix=choix;
 }
