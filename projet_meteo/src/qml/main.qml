@@ -409,13 +409,6 @@ Window
         triggeredOnStart: true
         onTriggered: update()
     }
-        Timer {
-        id: globalTimer2
-        interval: 1000
-        repeat: true
-        running: true
-        triggeredOnStart: true
-        onTriggered: actu_vec()
-    }
+
 
 }

@@ -33,10 +33,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = AppMeteo1.0.0
-DISTDIR = /home/pi/Desktop/PS4/projet_meteo/.tmp/AppMeteo1.0.0
+DISTDIR = /home/pi/Desktop/final/projet_meteo/.tmp/AppMeteo1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
-LIBS          = $(SUBLIBS) -lQt5Quick -lQt5Gui -lQt5Qml -lQt5Network -lQt5Core -lGLESv2 -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/local/lib -lprometheus-cpp-push -lprometheus-cpp-pull -lprometheus-cpp-core -lQt5Quick -lQt5Gui -lQt5Qml -lQt5Network -lQt5Core -lGLESv2 -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,12 +52,14 @@ SOURCES       = src/bme280.c \
 		src/capteur_bme.cpp \
 		src/main.cpp \
 		src/Objets.cpp \
-		src/zambetti.cpp moc_Objets.cpp
+		src/zambetti.cpp \
+		src/prometheusServ.cpp moc_Objets.cpp
 OBJECTS       = bme280.o \
 		capteur_bme.o \
 		main.o \
 		Objets.o \
 		zambetti.o \
+		prometheusServ.o \
 		moc_Objets.o
 DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/common/unix.conf \
@@ -127,11 +129,13 @@ DIST          = /usr/lib/arm-linux-gnueabihf/qt5/mkspecs/features/spec_pre.prf \
 		src/bme280_defs.h \
 		src/capteur_bme.h \
 		src/Objets.h \
-		src/zambetti.h src/bme280.c \
+		src/zambetti.h \
+		src/prometheusServ.h src/bme280.c \
 		src/capteur_bme.cpp \
 		src/main.cpp \
 		src/Objets.cpp \
-		src/zambetti.cpp
+		src/zambetti.cpp \
+		src/prometheusServ.cpp
 QMAKE_TARGET  = AppMeteo
 DESTDIR       = 
 TARGET        = AppMeteo
@@ -298,8 +302,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents src/bme280.h src/bme280_defs.h src/capteur_bme.h src/Objets.h src/zambetti.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/bme280.c src/capteur_bme.cpp src/main.cpp src/Objets.cpp src/zambetti.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/bme280.h src/bme280_defs.h src/capteur_bme.h src/Objets.h src/zambetti.h src/prometheusServ.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/bme280.c src/capteur_bme.cpp src/main.cpp src/Objets.cpp src/zambetti.cpp src/prometheusServ.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -333,7 +337,7 @@ moc_Objets.cpp: src/zambetti.h \
 		src/bme280_defs.h \
 		src/Objets.h \
 		/usr/lib/arm-linux-gnueabihf/qt5/bin/moc
-	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Desktop/PS4/projet_meteo -I/home/pi/Desktop/PS4/projet_meteo -I/usr/include/c++/6/bits -I/usr/include/c++/6 -I/usr/include -I/usr/local/lib -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtQuick -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtQml -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include src/Objets.h -o moc_Objets.cpp
+	/usr/lib/arm-linux-gnueabihf/qt5/bin/moc $(DEFINES) -I/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++ -I/home/pi/Desktop/final/projet_meteo -I/home/pi/Desktop/final/projet_meteo -I/usr/include/c++/6/bits -I/usr/include/c++/6 -I/usr/include -I/usr/local/lib -I/usr/include/arm-linux-gnueabihf/qt5 -I/usr/include/arm-linux-gnueabihf/qt5/QtQuick -I/usr/include/arm-linux-gnueabihf/qt5/QtGui -I/usr/include/arm-linux-gnueabihf/qt5/QtQml -I/usr/include/arm-linux-gnueabihf/qt5/QtNetwork -I/usr/include/arm-linux-gnueabihf/qt5/QtCore -I/usr/include/c++/6 -I/usr/include/arm-linux-gnueabihf/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/arm-linux-gnueabihf/6/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/6/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include src/Objets.h -o moc_Objets.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -360,7 +364,8 @@ capteur_bme.o: src/capteur_bme.cpp src/capteur_bme.h \
 main.o: src/main.cpp src/Objets.h \
 		src/zambetti.h \
 		src/bme280.h \
-		src/bme280_defs.h
+		src/bme280_defs.h \
+		src/prometheusServ.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
 
 Objets.o: src/Objets.cpp src/Objets.h \
@@ -372,6 +377,13 @@ Objets.o: src/Objets.cpp src/Objets.h \
 
 zambetti.o: src/zambetti.cpp src/zambetti.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o zambetti.o src/zambetti.cpp
+
+prometheusServ.o: src/prometheusServ.cpp src/capteur_bme.h \
+		src/Objets.h \
+		src/zambetti.h \
+		src/bme280.h \
+		src/bme280_defs.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o prometheusServ.o src/prometheusServ.cpp
 
 moc_Objets.o: moc_Objets.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Objets.o moc_Objets.cpp

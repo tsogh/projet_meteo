@@ -1,3 +1,4 @@
 #!/bin/sh
 
 apt-get install qt5-default qt5-qmake qtdeclarative5-dev qtdeclarative5-dev-tools  qml-module-qtquick2 qml-module-qtquick-controls
+apt-get install qmake

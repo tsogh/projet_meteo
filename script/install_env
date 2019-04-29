@@ -1,0 +1,4 @@
+#!/bin/sh
+
+unset LC_ALL LANG LANGUAGE
+
