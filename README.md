@@ -82,4 +82,4 @@ Ensuite dans Grafana, ajouter un DashBoard, ensuite ajouter un panel et indiquer
 
 * **Colinet Maxime** - *Implémentation de de l'application* - [Tsogh](https://github.com/tsogh/)
 
-* **Alexia** - *Contributeur* - [Alexia31200](https://github.com/Alexia31200)
+* **Turines Alexia** - *Contributeur* - [Alexia31200](https://github.com/Alexia31200)
