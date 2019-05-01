@@ -17,6 +17,9 @@ string get_trend_text(float trend) {
 }
 
 
+/*Above 1020 mB Winter or Summer differences of the pressure results in a change of only 2 Forecast letters
+ below 1020 mb only very moderate changes of about 2 Forecast letters in going from Summer to Winter estimates.
+*/
 // calcul de la pression de zambretti avec les regression linéaire
 int calc_zambretti(float zpressure, float trend) {
   string ztrend=get_trend_text(trend);
@@ -31,7 +34,7 @@ int calc_zambretti(float zpressure, float trend) {
   // FALLING
   if (ztrend == "Falling" ) {
     double zambretti = 0.0009746*zpressure*zpressure - 2.1068*zpressure+1138.7019; //y = 0.0009746x^2-2.1068x+1138.7019
-    printf("zambetti %f \n",zambretti);
+
     // hiver, on rajoute 1 au nombre de zambretti
     if (zmonth < 4 || zmonth > 9) zambretti = zambretti + 1;
     switch (int(round(zambretti))) {
@@ -99,54 +102,48 @@ int calc_zambretti_alt(float pressure,float trend){
 
               if (ztrend == "Falling" ){
               //FALLING
+			    if (pressure>=1030){return 2;}
+                if(pressure>=1020 && pressure<1030){return 8;}
+			    if(pressure>=980 && pressure<990){return 24;}
+                if(pressure>=970 && pressure<980){return 26;}
+                if(pressure<970){return 26;}
+				
               if (mon>=4 && mon<=9)
               //été
               {
-                if (pressure>=1030){return 2;}
-                else if(pressure>=1020 && pressure<1030){return 8;}
-                else if(pressure>=1010 && pressure<1020){return 18;}
-                else if(pressure>=1000 && pressure<1010){return 21;}
-                else if(pressure>=990 && pressure<1000){return 24;}
-                else if(pressure>=980 && pressure<990){return 24;}
-                else if(pressure>=970 && pressure<980){return 26;}
-                else if(pressure<970){return 26;}
+                if(pressure>=1010 && pressure<1020){return 18;}
+                if(pressure>=1000 && pressure<1010){return 21;}
+                if(pressure>=990 && pressure<1000){return 24;}
               }
               else{
               //hiver
-                if (pressure>=1030){return 2;}
-                else if(pressure>=1020 && pressure<1030){return 8;}
-                else if(pressure>=1010 && pressure<1020){return 15;}
-                else if(pressure>=1000 && pressure<1010){return 21;}
-                else if(pressure>=990 && pressure<1000){return 22;}
-                else if(pressure>=980 && pressure<990){return 24;}
-                else if(pressure>=970 && pressure<980){return 26;}
-                else if(pressure<970){return 26;}
+                if(pressure>=1010 && pressure<1020){return 15;}
+                if(pressure>=1000 && pressure<1010){return 21;}
+                if(pressure>=990 && pressure<1000){return 22;}
+
               }
             }
               if (ztrend == "Raising" ){
               //RAISING
+			    if (pressure>=1030){return 1;}
+                if(pressure>=1020 && pressure<1030){return 2;}
+				if(pressure>=1000 && pressure<1010){return 7;}
+			    if(pressure>=970 && pressure<980){return 17;}
+                if(pressure<970){return 17;}
+				
               if (mon>=4 && mon<=9){
                 //été
-                if (pressure>=1030){return 1;}
-                else if(pressure>=1020 && pressure<1030){return 2;}
-                else if(pressure>=1010 && pressure<1020){return 3;}
-                else if(pressure>=1000 && pressure<1010){return 7;}
-                else if(pressure>=990 && pressure<1000){return 9;}
-                else if(pressure>=980 && pressure<990){return 12;}
-                else if(pressure>=970 && pressure<980){return 17;}
-                else if(pressure<970){return 17;}
+                if(pressure>=1010 && pressure<1020){return 3;}
+                if(pressure>=990 && pressure<1000){return 9;}
+                if(pressure>=980 && pressure<990){return 12;}
               }
               else
                 //hiver
                {
-                if (pressure>=1030){return 1;}
-                else if(pressure>=1020 && pressure<1030){return 2;}
-                else if(pressure>=1010 && pressure<1020){return 6;}
-                else if(pressure>=1000 && pressure<1010){return 7;}
-                else if(pressure>=990 && pressure<1000){return 10;}
-                else if(pressure>=980 && pressure<990){return 13;}
-                else if(pressure>=970 && pressure<980){return 17;}
-                else if(pressure<970){return 17;}
+                if(pressure>=1010 && pressure<1020){return 6;}
+                if(pressure>=990 && pressure<1000){return 10;}
+                if(pressure>=980 && pressure<990){return 13;}
+
                }
             }
             if (ztrend == "Steady") {

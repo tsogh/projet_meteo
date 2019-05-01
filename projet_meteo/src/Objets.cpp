@@ -37,7 +37,7 @@ void Objets::table_rslt_zambetti(int code){
     case 4 :m_des = "Bien, deviens nuageux"; m_img=ind_heure==0?"cloudyday1":"cloudynigh1";m_code_couleur="#1e90ff";break;
     case 5 :m_des = "Bien, possibles averses"; m_img="rainy-2";m_code_couleur="#ebf5ff";break;
     case 6 :m_des = "Assez bien, en amélioration"; m_img="cloudy";m_code_couleur="#ebf5ff";break;
-    case 7 :m_des = "Assez bien, averses probable"; m_img="rainy-3";m_code_couleur="#ebf5ff";break;
+    case 7 :m_des = "Assez bien, averses probable"; m_img="rainy-2";m_code_couleur="#ebf5ff";break;
     case 8 :m_des = "Assez Bien, risque d'averses <br> plus tard"; m_img="rainy-3";m_code_couleur="#ebf5ff";break;
     case 9 :m_des = "Des averses, en amélioration"; m_img="rainy-4";m_code_couleur="#71808d";break;
     case 10 :m_des = "Changeant avec amélioration";m_img=ind_heure==0?"cloudyday1":"cloudynigh1";m_code_couleur="#71808d";break;
@@ -56,7 +56,7 @@ void Objets::table_rslt_zambetti(int code){
     case 23 :m_des = "Pluie à intervalles fréquents"; m_img="rainy-6";m_code_couleur="#5e80a0";break;
     case 24:m_des = "Très instable, pluie";m_img="rainy-7"; m_code_couleur="#5e80a0";break;
     case 25:m_des = "Orage, amélioration possible"; m_img="thunder";m_code_couleur="";break;
-    case 26:m_des = "Orage, beaucoup de pluie"; m_img="thunder";m_code_couleur="#7b7f83";break;
+    case 26:m_des = "Orage, beaucoup de pluie"; m_img="thunder";m_code_couleur="#7b7f80";break;
     default: m_des="erreur table"; break;
 }
 }
@@ -67,6 +67,7 @@ void Objets::recup_val(){
     m_humi=data.humidity;
     m_press=data.pressure/100;
     convert_pressAbs(m_press,m_alti,m_temp);
+    cout<<m_press_corrige;
     //calcul_altitude();
 
 }
@@ -91,7 +92,6 @@ qreal Objets::calcul_tendance(){
   //calcul de zambretti
 void Objets::calcul_zam(){
     int code;
-cout<<"test choix"<<m_choix<<" \n";
     if (m_choix==1){code= calc_zambretti_alt(m_press_corrige,m_press-calcul_tendance());}
     if (m_choix==0){code= calc_zambretti(m_press_corrige,m_press-calcul_tendance());}
     table_rslt_zambetti(code);
@@ -103,14 +103,12 @@ void Objets::refresh() {
     recup_val();
     histo_press();
     calcul_zam();
-    cout<<"test "<<m_press_corrige<<" \n";
 
 }
 void Objets::refresh_demo() {
     recup_val();
     table_rslt_zambetti(demo_code);
     demo_code++;
-    cout<<"test "<<demo_code<<" \n";
     if(demo_code==26){
         demo_code=1;
     }

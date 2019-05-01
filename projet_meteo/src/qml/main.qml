@@ -343,9 +343,9 @@ Window
         var col="%1"
         var alti="<b>Altitude</b><br>%1m"
         capt.refresh()
-        if(capt.fleche=="Falling"){color_fleche.color="red";}
+        if(capt.fleche=="Falling"){color_fleche.color="blue";}
         if(capt.fleche=="Steady"){color_fleche.color="green";}
-        if(capt.fleche=="Rising"){color_fleche.color="yellow";}
+        if(capt.fleche=="Rising"){color_fleche.color="red";}
         msg_tmp.text = temp.arg(capt.temp.toFixed(0))
         msg_humi.text = humi.arg(capt.humi.toFixed(0))
         msg_press.text = press.arg(capt.press.toFixed(1))
